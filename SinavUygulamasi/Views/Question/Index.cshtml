@@ -1,0 +1,76 @@
+﻿@model List<SinavUygulamasiData.Model.Question>
+@{
+}
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <h2>Questions List</h2>
+        </div>
+        <div class="col-6">
+            <a asp-controller="Question" asp-action="Create" asp-route-id="@ViewBag.SubjectId" class="btn btn-primary ">
+                <span>Create Question </span>
+            </a>
+        </div>
+    </div>
+    <div class="row">
+
+        <table class="table table-bordered table table-striped my-2">
+            <thead>
+                <tr>
+                    <th>
+                        Questions
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                    <th>
+                        Subject
+                    </th>
+                    <th>
+                        Question Type
+                    </th>
+                    <th>
+                       Difficulty Level
+                    </th>
+                    <th>Points</th>
+                    <th>
+                        Date
+                    </th>
+                    <th>
+                        Action
+                    </th>
+                   
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var question in Model)
+                {
+                    <tr>
+                        <td>@question.Id</td>
+                        <td>@question.Description</td>
+                        <td>@question.Subject.Name</td>
+                        <td>@question.QuestionType.Name</td>
+                        <td>@question.DifficultyLevel.Name</td>
+                        <td>@question.Point</td>
+                        <td>@question.CreateDate</td>
+                        <td>
+                           
+                            <a asp-controller="Question" asp-action="Update" asp-route-id="@question.Id" class="btn btn-primary">
+                                Update
+                            </a>
+
+                            <a asp-controller="Question" asp-action="Delete" asp-route-id="@question.Id" class="btn btn-danger">
+                                Delete
+                            </a>
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+
+
+
+</div>

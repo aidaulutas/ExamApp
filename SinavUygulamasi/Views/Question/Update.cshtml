@@ -1,0 +1,115 @@
+﻿@model SinavUygulamasiData.Model.Question
+@{
+}
+<h1>Update</h1>
+<form method="post" action="Update" class="mt-5">
+    <div class="mb-3">
+        <label for="" class="form-label">Description</label>
+        <input type="text" class="form-control" asp-for="Description">
+        <input type="hidden" asp-for="Id" value="@Model.Id" />
+        <input type="hidden" asp-for="SubjectId" value="@Model.SubjectId" />
+    </div>
+    <div class="mb-3">
+        <label for="" class="form-label">Question Type</label>
+        @Html.DropDownListFor(x=>x.QuestionTypeId, new SelectList(ViewBag.QuestionType, "Id", "Name"), new { @class = "form-control", disabled="disabled"})
+        <input type="hidden" asp-for="QuestionTypeId">
+    </div>
+    <div class="mb-3">
+        <label for="" class="form-label">Difficulty Level</label>
+        @Html.DropDownListFor(x=>x.DifficultyLevelId, new SelectList(ViewBag.DifficultyLevel, "Id", "Name"), new { @class = "form-control"})
+    </div>
+    <div class="mb-3">
+        <label for="" class="form-label">Points</label>
+        <input type="number" class="form-control" asp-for="Point">
+    </div>
+    <div class="alert alert-danger alert-danger" role="alert">
+        With this Question type you cant add answer. You can skip this step.
+    </div>
+    <div class="addbutton">
+        <input id="AddButton" type="button" value="Add Answer" class="btn btn-sm btn-success" style="float:right;" />
+    </div>
+
+    <div id="TextBoxContainer" class="col-sm-6">
+        @for (int i = 0; i < Model.Answers.Count; i++)
+        {
+            <div class="row" id="@Model.Answers[i].Id">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>Answer</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend"></div>
+                            <input type="text" class="form-control" data-val="true" data-val-required="The Answer field is required." asp-for="Answers[i].Name">
+                            <input type="hidden"  asp-for="Answers[i].Id">
+                            <input type="hidden" asp-for="Answers[i].QuestionId">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="checkbox" asp-for="Answers[i].IsTrue">
+                            <label for="@Model.Answers[i].IsTrue">True Answer</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <div class="input-group" style="margin-top:30px">
+                             <a asp-controller="Question" asp-action="AnswerDelete" asp-route-id="@Model.Answers[i].Id" class="btn btn-danger">
+                                Delete
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <button type="submit" class="btn btn-danger"
+            asp-action="Update"
+            asp-controller="Question">
+        Update
+    </button>
+</form>
+<script>
+    $(function () {
+        $("#QuestionTypeId").change(function () {
+            var type = $("#QuestionTypeId option:selected").val()
+            if (type == 3) { // It doesn't work over here.
+                $(".alert-danger").show();
+                $(".addbutton").hide();
+                $("#TextBoxContainer").hide();
+            }
+            if (type == 4) {
+                $(".alert-danger").hide();
+                $(".addbutton").show();
+                $("#TextBoxContainer").show();
+            }
+            if (type == 2) {
+                $(".alert-danger").hide();
+                $(".addbutton").show();
+                $("#TextBoxContainer").show();
+
+            }
+            if (type == 1) {
+                $(".alert-danger").show();
+                $(".addbutton").hide();
+                $("#TextBoxContainer").hide();
+
+            }
+        });
+    });
+    $(document).ready(function () {
+        var i = 0;
+        $("#AddButton").click(function () {
+            var form = '<div class="row" id="' + i + '"><div class="col-sm-4"><div class="form-group"><label>Answer</label><div class="input-group"><div class="input-group-prepend"></div><input type="text" class="form-control" data-val="true" data-val-required="The Answer field is required." id="Answers_' + i + '__StartDate" name="Answers[' + i + '].Name" value=""></div></div></div><div class="col-sm-2"><div class="form-group"><div class="input-group"><input type="checkbox" id="Answers_' + i + '__IsTrue" name="Answers[' + i + '].IsTrue"><label for="Answers_' + i + '__IsTrue">True Answer</label></div></div></div><div class="col-sm-2"><div class="form-group"><div class="input-group" style="margin-top:30px"><input type="button" value="Remove" data-id="' + i + '" onclick="RemoveTextBox(this)" class="btn btn-danger"></div></div></div></div>';
+            $("#TextBoxContainer").append(form);
+            i++;
+        });
+    });
+    function RemoveTextBox(button) {
+        var btn = button;
+        var row = document.getElementById(btn.getAttribute('data-id'));
+        row.remove();
+    }
+</script>

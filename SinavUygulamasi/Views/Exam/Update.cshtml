@@ -1,0 +1,29 @@
+﻿@model SinavUygulamasiData.Model.Exam
+
+<h1>Update</h1>
+
+    <h1>Create</h1>
+    <form method="post" action="Update" class="mt-5">
+        <div class="mb-3">
+            <label for="" class="form-label">Name</label>
+            <input type="text" class="form-control" asp-for="Name">
+        </div>
+        <div class="mb-3">
+            <label for="" class="form-label">Subject</label>
+            @Html.DropDownListFor(x=>x.SubjectId, new SelectList(ViewBag.Subject, "Id", "Name"),"Please select a Subject", new { @class = "form-control", @Id="SubjectId", required = "required"})
+        </div>
+        <div class="mb-3">
+            <label for="" class="form-label">Exam Type</label>
+        @Html.DropDownListFor(x=>x.QuestionTypeId, new SelectList(ViewBag.ExamType, "Id", "Name"),"Please select Exam Type", new { @class = "form-control", @Id="QuestionTypeId", required = "required"})
+        </div>
+        <div class="mb-3">
+            <label for="" class="form-label">Difficulty Level</label>
+            @Html.DropDownListFor(x=>x.DifficultyLevelId, new SelectList(ViewBag.DifficultyLevel, "Id", "Name"),"Please Choose Difficulty Level", new { @class = "form-control", required = "required"})
+        </div>       
+    <button type="submit" class="btn btn-danger"
+            asp-action="Update"
+            asp-controller="Exam">
+        Update
+    </button>
+    </form>
+   

@@ -1,0 +1,74 @@
+﻿@model List<SinavUygulamasiData.Model.Subject>
+@{
+}
+@*<h1>Subjects</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>            
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var subject in Model)
+        {
+            <tr>
+                <td>@subject.Id</td>
+                <td>@subject.Name</td>
+            </tr>
+        }
+    </tbody>
+</table>*@
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <h2>Subjects List</h2>
+        </div>
+        <div class="col-6">
+            <a asp-controller="Subject" asp-action="Create" class="btn btn-primary ">
+                <span>Create Subject </span>
+            </a>
+        </div>
+    </div>
+    <div class="row">
+
+        <table class="table table-bordered table table-striped my-2">
+            <thead>
+                <tr>
+                    <th>
+                        Subject Name
+                    </th>
+                    <th>
+
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var subject in Model)
+                {
+                    <tr>
+                        <td>@subject.Name</td>
+                        <td>
+                            <a asp-controller="Question" asp-action="Index" asp-route-id="@subject.Id" class="btn btn-success">
+                                Questions
+                            </a>
+                            <a asp-controller="Subject" asp-action="Update" asp-route-id="@subject.Id" class="btn btn-primary">
+                                Update
+                            </a>
+
+                            <a asp-controller="Subject" asp-action="Delete" asp-route-id="@subject.Id" class="btn btn-danger">
+                                Delete
+                            </a>      
+                            
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+
+
+
+</div>
