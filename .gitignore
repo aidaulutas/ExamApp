@@ -4,5 +4,6 @@ SinavUygulamasi/obj
 SinavUygulamasiData/bin
 SinavUygulamasiData/obj
 .idea
+.vs
 git rm -r --cached bin
 
